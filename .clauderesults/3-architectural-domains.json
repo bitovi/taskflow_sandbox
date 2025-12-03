@@ -1,0 +1,156 @@
+{
+  "ui": {
+    "required_patterns": {
+      "component-composition": "All UI components use shadcn/ui primitives built on Radix UI. Components are composed from smaller primitives (Button, Card, Avatar, etc.)",
+      "client-directive": "Interactive components require 'use client' directive at the top of the file",
+      "styling-approach": "Tailwind CSS utility classes are used for all styling, with cn() utility for conditional classes",
+      "icon-library": "Lucide React is the standard icon library across all components",
+      "typography": "Poppins font (imported from lib/fonts.ts) is applied to headings and titles using className interpolation"
+    },
+    "architectural_constraints": {
+      "component-composition": "Must use existing shadcn/ui components. Do not introduce other UI libraries (Material-UI, Ant Design, etc.)",
+      "client-directive": "Server Components are default. Only add 'use client' when using hooks (useState, useEffect) or browser APIs",
+      "styling-approach": "All styling must use Tailwind classes. No CSS modules, styled-components, or inline styles",
+      "icon-library": "Icons must come from lucide-react. Do not use Font Awesome, React Icons, or other icon libraries",
+      "typography": "Brand typography uses Poppins font from lib/fonts.ts for headings. Inter (from layout) for body text"
+    }
+  },
+  "routing": {
+    "required_patterns": {
+      "app-router": "Next.js 15 App Router architecture with file-based routing in app/ directory",
+      "route-groups": "Protected routes use (dashboard) route group with shared layout and authentication",
+      "navigation": "Link component from next/link for client-side navigation, useRouter for programmatic navigation",
+      "server-components": "Pages are Server Components by default, with selective use of Client Components"
+    },
+    "architectural_constraints": {
+      "app-router": "Must use App Router patterns. No Pages Router (pages/ directory) patterns",
+      "route-groups": "Dashboard routes must be inside (dashboard) group to inherit auth protection and layout",
+      "navigation": "Use Next.js Link and useRouter. Do not use <a> tags for internal navigation",
+      "server-components": "Keep pages as Server Components when possible. Only use 'use client' when necessary"
+    }
+  },
+  "data-layer": {
+    "required_patterns": {
+      "prisma-client": "All database operations use Prisma Client from @/app/generated/prisma",
+      "server-actions": "Data mutations (create, update, delete) are implemented as Server Actions with 'use server' directive",
+      "formdata-api": "Forms submit using FormData API, processed in Server Actions",
+      "revalidation": "After mutations, revalidatePath() is called to refresh cached data",
+      "session-management": "Authentication uses session tokens stored in database and httpOnly cookies"
+    },
+    "architectural_constraints": {
+      "prisma-client": "Database access only through Prisma. Do not use raw SQL queries or other ORMs",
+      "server-actions": "Mutations must use Server Actions pattern. Avoid creating REST API routes unless necessary",
+      "formdata-api": "Form submissions use native FormData. Do not introduce React Hook Form, Formik, or other form libraries",
+      "revalidation": "Always call revalidatePath() after data changes to ensure UI reflects updates",
+      "session-management": "Session authentication is custom. Do not introduce NextAuth, Auth0, or other auth libraries without refactoring existing pattern"
+    }
+  },
+  "state-management": {
+    "required_patterns": {
+      "local-state": "useState for component-local state",
+      "optimistic-updates": "useOptimistic hook for immediate UI feedback on mutations (task deletion, status changes)",
+      "loading-states": "useTransition for managing loading states during async Server Action calls",
+      "server-state": "Server Components fetch data directly, pass as props to Client Components",
+      "no-global-state": "No Redux, Zustand, or other global state management libraries"
+    },
+    "architectural_constraints": {
+      "local-state": "Keep state colocated with components. Avoid prop drilling by fetching data at route level",
+      "optimistic-updates": "Use useOptimistic for mutations that should feel instant (toggles, deletes)",
+      "loading-states": "Wrap Server Action calls in startTransition() from useTransition to show loading states",
+      "server-state": "Server Components should fetch and pass data. Client Components receive via props",
+      "no-global-state": "Do not introduce global state libraries. Use Server Components and Server Actions for shared data"
+    }
+  },
+  "forms": {
+    "required_patterns": {
+      "server-actions": "Form actions use Server Actions as the action prop",
+      "useactionstate-hook": "useActionState hook manages form state and submission",
+      "useformstatus-hook": "useFormStatus hook in submit button components to show pending state",
+      "formdata-validation": "Server-side validation in Server Actions using FormData.get()",
+      "error-handling": "Server Actions return { error, success, message } objects for client display"
+    },
+    "architectural_constraints": {
+      "server-actions": "Forms must use Server Actions. Do not create API routes for form submissions",
+      "useactionstate-hook": "Use useActionState (React 19) for form state, not manual state management",
+      "useformstatus-hook": "Submit buttons must use useFormStatus to show loading state",
+      "formdata-validation": "Validation happens server-side in Server Actions. No client-side validation libraries",
+      "error-handling": "Consistent error response format: { error: string | null, success: boolean, message?: string }"
+    }
+  },
+  "authentication": {
+    "required_patterns": {
+      "session-tokens": "Session tokens are random hex strings stored in database Session model",
+      "httponly-cookies": "Session tokens stored in httpOnly cookies for security",
+      "password-hashing": "bcryptjs library for password hashing (10 rounds)",
+      "current-user-action": "getCurrentUser() Server Action retrieves user from session cookie",
+      "protected-routes": "Dashboard layout checks authentication, redirects to /login if not authenticated"
+    },
+    "architectural_constraints": {
+      "session-tokens": "Authentication is session-based. Do not introduce JWT tokens without refactoring",
+      "httponly-cookies": "Session cookies must be httpOnly for security. No localStorage or sessionStorage",
+      "password-hashing": "Use bcryptjs for password operations. Do not change to argon2 or other libraries",
+      "current-user-action": "Always use getCurrentUser() to check auth status. Do not query database directly",
+      "protected-routes": "Protected routes must be in (dashboard) route group to inherit auth check"
+    }
+  },
+  "drag-and-drop": {
+    "required_patterns": {
+      "hello-pangea-dnd": "@hello-pangea/dnd library for drag-and-drop functionality",
+      "kanban-structure": "DragDropContext wraps entire board, Droppable for columns, Draggable for tasks",
+      "optimistic-updates": "UI updates immediately on drag, then Server Action persists change",
+      "status-update": "Dragging task between columns updates task status via updateTaskStatus Server Action"
+    },
+    "architectural_constraints": {
+      "hello-pangea-dnd": "Use @hello-pangea/dnd for drag-and-drop. Do not introduce dnd-kit or other libraries",
+      "kanban-structure": "Kanban board structure follows existing pattern with fixed columns (todo, in_progress, review, done)",
+      "optimistic-updates": "Always update UI optimistically before calling Server Action for perceived performance",
+      "status-update": "Column IDs must match task status values exactly for drag-drop to work"
+    }
+  },
+  "data-visualization": {
+    "required_patterns": {
+      "recharts-library": "Recharts library for all charts and graphs",
+      "chart-types": "Bar charts, pie charts supported in dashboard",
+      "responsive-container": "ResponsiveContainer wrapper for responsive chart sizing",
+      "data-aggregation": "Data is aggregated client-side or in Server Components before passing to chart components"
+    },
+    "architectural_constraints": {
+      "recharts-library": "Use Recharts for visualizations. Do not introduce D3.js, Chart.js, or other charting libraries",
+      "chart-types": "Stick to simple chart types (bar, pie, line). Recharts is configured for dashboard-style analytics",
+      "responsive-container": "Always wrap charts in ResponsiveContainer for proper responsive behavior",
+      "data-aggregation": "Aggregate data before rendering charts. Charts receive processed data, not raw task arrays"
+    }
+  },
+  "testing": {
+    "required_patterns": {
+      "jest-unit-tests": "Jest with React Testing Library for unit tests",
+      "playwright-e2e": "Playwright for end-to-end tests",
+      "test-id-attributes": "data-testid attributes on elements for reliable test selectors",
+      "global-setup-teardown": "E2E tests use global setup/teardown scripts for database seeding",
+      "test-colocation": "Tests organized in tests/unit/ and tests/e2e/ directories"
+    },
+    "architectural_constraints": {
+      "jest-unit-tests": "Unit tests use Jest and RTL. Do not introduce Vitest or other test frameworks",
+      "playwright-e2e": "E2E tests use Playwright. Do not use Cypress or other E2E tools",
+      "test-id-attributes": "Add data-testid to interactive elements for testing. Use semantic queries when possible",
+      "global-setup-teardown": "E2E tests rely on seeded data. Use global-setup.js pattern for test data",
+      "test-colocation": "Keep test organization: unit tests in tests/unit/, E2E in tests/e2e/"
+    }
+  },
+  "design-system": {
+    "required_patterns": {
+      "shadcn-ui": "All UI components based on shadcn/ui component library",
+      "radix-primitives": "Underlying primitives from Radix UI for accessibility",
+      "tailwind-design-tokens": "Design tokens implemented via Tailwind config (colors, spacing, etc.)",
+      "component-variants": "class-variance-authority (cva) for component variant styling",
+      "cn-utility": "cn() utility function from lib/utils.ts for conditional class names"
+    },
+    "architectural_constraints": {
+      "shadcn-ui": "New UI components should follow shadcn/ui patterns and be placed in components/ui/",
+      "radix-primitives": "Maintain Radix UI as foundation. Do not replace with headlessui or other primitives",
+      "tailwind-design-tokens": "Design tokens in Tailwind config. Do not use CSS variables or styled-system",
+      "component-variants": "Use cva for components with multiple variants. Follow Button component pattern",
+      "cn-utility": "Always use cn() utility for conditional classes. Do not use classnames or clsx libraries"
+    }
+  }
+}

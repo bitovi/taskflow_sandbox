@@ -1,0 +1,107 @@
+{
+  "ui": {
+    "required_patterns": {
+      "component-composition": "All UI components must use shadcn/ui + Radix primitives for accessibility",
+      "styling": "Use Tailwind CSS with cn() utility for conditional classes",
+      "typography": "Import and use Poppins font via lib/fonts.ts for headings",
+      "component-structure": "Separate business components from ui components directory"
+    },
+    "architectural_constraints": {
+      "accessibility": "All interactive components must use Radix UI primitives (Button, Dialog, Dropdown, etc.)",
+      "responsiveness": "Components must support mobile-first responsive design",
+      "theming": "Use design tokens and CSS custom properties for consistent theming",
+      "component-exports": "UI components must use forwardRef and export both component and variants"
+    }
+  },
+  "routing": {
+    "required_patterns": {
+      "app-router": "Use Next.js 15 App Router with route groups for organization",
+      "protected-routes": "Dashboard routes use (dashboard) group with layout.tsx auth guard",
+      "server-components": "Default to server components, use 'use client' only when necessary"
+    },
+    "architectural_constraints": {
+      "authentication": "Protected routes must check getCurrentUser() in layout.tsx",
+      "route-structure": "Use route groups (dashboard) and nested folders for organization",
+      "redirects": "Use next/navigation redirect() for server-side redirects"
+    }
+  },
+  "data-layer": {
+    "required_patterns": {
+      "orm": "All database operations must use Prisma ORM with generated types",
+      "server-actions": "Data mutations must use Next.js server actions with 'use server'",
+      "error-handling": "Return { error: string | null, success?: boolean } pattern",
+      "revalidation": "Use revalidatePath() after mutations to update cached data"
+    },
+    "architectural_constraints": {
+      "database": "SQLite with Prisma client generated to app/generated/prisma",
+      "type-safety": "Use Prisma-generated types and include relationships in queries",
+      "form-data": "Extract form data using FormData.get() pattern in server actions",
+      "optimistic-updates": "Use useOptimistic for immediate UI feedback"
+    }
+  },
+  "state-management": {
+    "required_patterns": {
+      "server-state": "Fetch data in server components, pass to client components as props",
+      "optimistic-ui": "Use useOptimistic for immediate feedback on mutations",
+      "form-state": "Use useActionState for form submission state management",
+      "transitions": "Use useTransition for non-blocking state updates"
+    },
+    "architectural_constraints": {
+      "no-global-state": "No Redux/Zustand - rely on server state and local component state",
+      "client-boundaries": "Minimize 'use client' usage, prefer server components",
+      "state-colocation": "Keep state close to where it's used, avoid prop drilling"
+    }
+  },
+  "auth": {
+    "required_patterns": {
+      "session-based": "Use session tokens stored in database with bcryptjs for passwords",
+      "server-actions": "Login/signup must use server actions with form validation",
+      "user-context": "Get current user via getCurrentUser() server action",
+      "route-protection": "Use layout.tsx to protect route groups"
+    },
+    "architectural_constraints": {
+      "password-hashing": "Use bcryptjs for password hashing with salt rounds of 10",
+      "session-management": "Store sessions in database with unique tokens",
+      "form-validation": "Validate required fields and return structured error responses"
+    }
+  },
+  "testing": {
+    "required_patterns": {
+      "unit-tests": "Use Jest + Testing Library for component and utility testing",
+      "e2e-tests": "Use Playwright for end-to-end user workflow testing",
+      "test-data": "Use data-testid attributes for stable test selectors",
+      "setup": "Use jest.setup.ts for global test configuration"
+    },
+    "architectural_constraints": {
+      "test-structure": "Separate unit tests in tests/unit/ and e2e in tests/e2e/",
+      "naming": "Test files must use .test.tsx/.test.ts/.spec.ts extensions",
+      "assertions": "Use @testing-library/jest-dom matchers for DOM assertions"
+    }
+  },
+  "drag-and-drop": {
+    "required_patterns": {
+      "dnd-library": "Use @hello-pangea/dnd for drag and drop functionality",
+      "kanban-structure": "Implement DragDropContext > Droppable > Draggable hierarchy",
+      "optimistic-updates": "Update UI immediately on drag, then sync with server",
+      "state-management": "Use useState for drag state, useTransition for server sync"
+    },
+    "architectural_constraints": {
+      "drag-ids": "Use string IDs for draggableId, convert to numbers for database",
+      "drop-result": "Handle DropResult with source/destination validation",
+      "visual-feedback": "Provide visual feedback during drag with CSS classes"
+    }
+  },
+  "charts-visualization": {
+    "required_patterns": {
+      "recharts": "Use Recharts library for all data visualization",
+      "responsive-containers": "Wrap all charts in ResponsiveContainer",
+      "data-transformation": "Transform raw data client-side for chart consumption",
+      "color-consistency": "Use predefined COLORS array for consistent chart theming"
+    },
+    "architectural_constraints": {
+      "chart-types": "Support PieChart, BarChart with proper data structures",
+      "tooltip-customization": "Use cursor={{ fill: 'transparent' }} for clean tooltips",
+      "data-format": "Charts expect { name, value/count } object structure"
+    }
+  }
+}

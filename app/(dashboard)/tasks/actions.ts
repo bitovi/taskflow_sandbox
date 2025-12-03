@@ -4,6 +4,7 @@ import { getCurrentUser } from "@/app/login/actions";
 import { PrismaClient } from "@/app/generated/prisma";
 import { revalidatePath } from "next/cache";
 import { parseDateString } from "@/lib/date-utils";
+import { safeUserSelect } from "@/lib/safe-user-select";
 const prisma = new PrismaClient();
 
 export async function createTask(formData: FormData) {
@@ -46,8 +47,8 @@ export async function getAllTasks() {
     try {
         const tasks = await prisma.task.findMany({
             include: {
-                assignee: { select: { id: true, name: true, email: true, password: true } },
-                creator: { select: { id: true, name: true, email: true, password: true } },
+                assignee: { select: safeUserSelect },
+                creator: { select: safeUserSelect },
             },
             orderBy: { createdAt: "desc" },
         });
