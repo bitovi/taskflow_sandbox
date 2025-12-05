@@ -1,0 +1,132 @@
+{
+  "routing": {
+    "required_patterns": {
+      "app-router-structure": "Use Next.js 15 App Router with file-based routing in app/ directory",
+      "route-groups": "Authenticated routes use (dashboard) route group with shared layout",
+      "public-routes": "Login and signup pages are in root app/ without route groups"
+    },
+    "architectural_constraints": {
+      "server-components-default": "All pages are Server Components by default unless 'use client' is specified",
+      "authentication-guard": "Dashboard layout checks authentication via getCurrentUser() and redirects to /login if not authenticated",
+      "navigation": "Client-side navigation uses next/link and next/navigation (usePathname, useRouter)"
+    }
+  },
+  "ui": {
+    "required_patterns": {
+      "shadcn-radix": "All UI primitives use shadcn/ui components built on @radix-ui primitives",
+      "component-structure": "UI components in components/ui/, business logic components in components/",
+      "styling": "Tailwind CSS for all styling with utility classes",
+      "design-tokens": "Use Tailwind CSS variables for theming (e.g., bg-background, text-foreground)"
+    },
+    "architectural_constraints": {
+      "no-inline-styles": "Never use inline styles; use Tailwind utility classes",
+      "component-composition": "Compose complex components from ui/ primitives (Card, Button, Badge, etc.)",
+      "variant-patterns": "Use class-variance-authority (cva) for component variants",
+      "accessibility": "All interactive elements must be keyboard accessible (Radix provides this by default)"
+    }
+  },
+  "data-layer": {
+    "required_patterns": {
+      "prisma-orm": "All database operations use Prisma Client from @/app/generated/prisma",
+      "server-actions": "Data mutations happen exclusively through Server Actions (files ending in actions.ts)",
+      "safe-user-select": "Always use safeUserSelect from @/lib/safe-user-select when returning user data to prevent password exposure",
+      "revalidation": "Call revalidatePath() after data mutations to update cached pages"
+    },
+    "architectural_constraints": {
+      "no-api-routes": "Do not create API routes in app/api/; use Server Actions instead",
+      "server-actions-only": "All data mutations must be in Server Actions with 'use server' directive",
+      "prisma-client-instantiation": "Create new PrismaClient() instance in each Server Action file",
+      "error-handling": "Return { error: string | null } from Server Actions for consistent error handling",
+      "password-security": "Never include password field in queries; use safeUserSelect for user data"
+    }
+  },
+  "state-management": {
+    "required_patterns": {
+      "server-state": "Server Components fetch data directly via Server Actions or Prisma",
+      "client-state": "Client components use React hooks (useState, useTransition) for local state",
+      "optimistic-updates": "Use useOptimistic for immediate UI feedback on mutations (e.g., task deletion, status updates)",
+      "form-state": "Use useActionState (React 19) for form submission state management"
+    },
+    "architectural_constraints": {
+      "no-global-state": "No global state management libraries (Redux, Zustand, etc.)",
+      "server-first": "Prefer Server Components and Server Actions over client-side state when possible",
+      "transition-tracking": "Use useTransition to track pending async operations in client components"
+    }
+  },
+  "auth": {
+    "required_patterns": {
+      "session-based": "Custom session-based authentication using database-stored tokens",
+      "bcrypt-hashing": "Use bcryptjs for password hashing and comparison",
+      "cookie-storage": "Store session tokens in httpOnly cookies via next/headers cookies()",
+      "current-user-helper": "Use getCurrentUser() server action to retrieve authenticated user"
+    },
+    "architectural_constraints": {
+      "no-jwt": "Do not use JWT tokens; use database-backed sessions",
+      "no-oauth": "No third-party OAuth providers; only email/password authentication",
+      "server-side-auth": "Authentication logic must be in Server Actions, never client-side",
+      "protected-routes": "Use layout-level authentication guards that redirect unauthenticated users"
+    }
+  },
+  "drag-and-drop": {
+    "required_patterns": {
+      "hello-pangea-dnd": "Use @hello-pangea/dnd library for all drag-and-drop functionality",
+      "kanban-pattern": "Implement drag-and-drop with DragDropContext, Droppable, and Draggable components",
+      "optimistic-ui": "Update UI optimistically before server mutation completes"
+    },
+    "architectural_constraints": {
+      "client-component-only": "Drag-and-drop components must be client components ('use client')",
+      "server-sync": "Always sync drag-and-drop state changes to server via Server Actions",
+      "transition-wrapping": "Wrap server mutations in startTransition for non-blocking updates"
+    }
+  },
+  "charts-visualization": {
+    "required_patterns": {
+      "recharts-library": "Use recharts for all data visualization (BarChart, PieChart, etc.)",
+      "responsive-container": "Wrap charts in ResponsiveContainer for responsive sizing",
+      "custom-styling": "Apply custom colors and styling via chart props (fill, stroke, etc.)"
+    },
+    "architectural_constraints": {
+      "client-component-only": "Charts must be in client components due to recharts requiring browser APIs",
+      "data-processing": "Process data for charts on server when possible, pass formatted data to client"
+    }
+  },
+  "forms": {
+    "required_patterns": {
+      "server-actions": "Forms submit to Server Actions using action prop",
+      "progressive-enhancement": "Forms work without JavaScript via native form submission",
+      "useActionState": "Use useActionState hook for form state and error handling",
+      "useFormStatus": "Use useFormStatus in submit buttons to show pending state"
+    },
+    "architectural_constraints": {
+      "no-client-validation-only": "Always validate on server; client validation is optional enhancement",
+      "formdata-parsing": "Server Actions receive FormData, not JSON",
+      "error-display": "Display form errors from Server Action return value"
+    }
+  },
+  "testing": {
+    "required_patterns": {
+      "jest-unit-tests": "Use Jest + React Testing Library for unit/component tests in tests/unit/",
+      "playwright-e2e": "Use Playwright for end-to-end tests in tests/e2e/",
+      "test-naming": "Name test files with .test.tsx or .test.ts for unit, .spec.ts for e2e",
+      "global-setup": "E2E tests use global-setup.js and global-teardown.js for database seeding"
+    },
+    "architectural_constraints": {
+      "no-mocking-server-actions": "In E2E tests, test actual Server Actions, not mocks",
+      "seed-data": "Use prisma seed scripts for consistent test data",
+      "testid-attributes": "Use data-testid for E2E test selectors"
+    }
+  },
+  "design-system": {
+    "required_patterns": {
+      "shadcn-ui-library": "All UI components follow shadcn/ui patterns",
+      "radix-primitives": "Radix UI provides accessible, unstyled component primitives",
+      "tailwind-theming": "Use CSS variables for theme colors (defined in globals.css)",
+      "typography": "Use Poppins font (imported from lib/fonts.ts) for headings and brand elements"
+    },
+    "architectural_constraints": {
+      "no-custom-ui-primitives": "Do not create custom implementations of standard UI components (buttons, dropdowns, etc.)",
+      "consistent-spacing": "Use Tailwind spacing scale for all layout spacing",
+      "icon-library": "Use lucide-react for all icons"
+    }
+  }
+}

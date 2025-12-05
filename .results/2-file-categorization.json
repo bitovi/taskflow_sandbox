@@ -1,0 +1,100 @@
+{
+  "ui-components": [
+    "./components/ui/avatar.tsx",
+    "./components/ui/badge.tsx",
+    "./components/ui/button.tsx",
+    "./components/ui/card.tsx",
+    "./components/ui/checkbox.tsx",
+    "./components/ui/dialog.tsx",
+    "./components/ui/dropdown-menu.tsx",
+    "./components/ui/input.tsx",
+    "./components/ui/label.tsx",
+    "./components/ui/select.tsx",
+    "./components/ui/textarea.tsx"
+  ],
+  "business-components": [
+    "./components/auth-dropdown.tsx",
+    "./components/create-task-form.tsx",
+    "./components/dashboard-charts.tsx",
+    "./components/edit-task-form.tsx",
+    "./components/kanban-board.tsx",
+    "./components/sidebar.tsx",
+    "./components/task-form.tsx",
+    "./components/task-list.tsx",
+    "./components/task-overview.tsx",
+    "./components/tasks-page-client.tsx",
+    "./components/team-stats.tsx"
+  ],
+  "route-pages": [
+    "./app/(dashboard)/page.tsx",
+    "./app/(dashboard)/board/page.tsx",
+    "./app/(dashboard)/tasks/page.tsx",
+    "./app/(dashboard)/tasks/new/page.tsx",
+    "./app/(dashboard)/team/page.tsx",
+    "./app/login/page.tsx",
+    "./app/signup/page.tsx"
+  ],
+  "layout-components": [
+    "./app/layout.tsx",
+    "./app/(dashboard)/layout.tsx"
+  ],
+  "server-actions": [
+    "./app/(dashboard)/tasks/actions.ts",
+    "./app/login/actions.ts",
+    "./app/signup/actions.ts"
+  ],
+  "utility-functions": [
+    "./lib/utils.ts",
+    "./lib/date-utils.ts",
+    "./lib/safe-user-select.ts",
+    "./lib/fonts.ts"
+  ],
+  "type-definitions": [
+    "./lib/types.ts"
+  ],
+  "database-schema": [
+    "./prisma/schema.prisma"
+  ],
+  "database-utilities": [
+    "./prisma/seed.js",
+    "./prisma/clear.js"
+  ],
+  "unit-tests": [
+    "./tests/unit/button.test.tsx",
+    "./tests/unit/create-task-form.test.tsx",
+    "./tests/unit/date-utils.test.ts",
+    "./tests/unit/input.test.tsx",
+    "./tests/unit/login-actions.test.ts",
+    "./tests/unit/seed-helpers.test.js",
+    "./tests/unit/tasks-actions.test.ts",
+    "./tests/unit/utils-cn.test.ts"
+  ],
+  "e2e-tests": [
+    "./tests/e2e/auth.spec.ts",
+    "./tests/e2e/kanban.spec.ts",
+    "./tests/e2e/tasks.spec.ts",
+    "./tests/e2e/global-setup.js",
+    "./tests/e2e/global-teardown.js"
+  ],
+  "configuration-files": [
+    "./package.json",
+    "./tsconfig.json",
+    "./tsconfig.jest.json",
+    "./next.config.ts",
+    "./jest.config.cjs",
+    "./jest.setup.ts",
+    "./playwright.config.ts",
+    "./eslint.config.mjs",
+    "./postcss.config.mjs"
+  ],
+  "styles": [
+    "./app/globals.css"
+  ],
+  "documentation": [
+    "./README.md"
+  ],
+  "docker-files": [
+    "./Dockerfile",
+    "./docker-compose.yml"
+  ]
+}
