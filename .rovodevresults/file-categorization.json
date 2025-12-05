@@ -1,0 +1,128 @@
+{
+  "next-pages": [
+    "./app/(dashboard)/page.tsx",
+    "./app/(dashboard)/board/page.tsx",
+    "./app/(dashboard)/tasks/page.tsx",
+    "./app/(dashboard)/tasks/new/page.tsx",
+    "./app/(dashboard)/team/page.tsx",
+    "./app/login/page.tsx",
+    "./app/signup/page.tsx"
+  ],
+  "layout-components": [
+    "./app/layout.tsx",
+    "./app/(dashboard)/layout.tsx"
+  ],
+  "server-actions": [
+    "./app/(dashboard)/tasks/actions.ts",
+    "./app/login/actions.ts",
+    "./app/signup/actions.ts"
+  ],
+  "business-components": [
+    "./components/create-task-form.tsx",
+    "./components/edit-task-form.tsx",
+    "./components/task-form.tsx",
+    "./components/task-list.tsx",
+    "./components/tasks-page-client.tsx",
+    "./components/kanban-board.tsx",
+    "./components/dashboard-charts.tsx",
+    "./components/task-overview.tsx",
+    "./components/team-stats.tsx",
+    "./components/auth-dropdown.tsx",
+    "./components/sidebar.tsx"
+  ],
+  "ui-components": [
+    "./components/ui/avatar.tsx",
+    "./components/ui/badge.tsx",
+    "./components/ui/button.tsx",
+    "./components/ui/card.tsx",
+    "./components/ui/checkbox.tsx",
+    "./components/ui/dialog.tsx",
+    "./components/ui/dropdown-menu.tsx",
+    "./components/ui/input.tsx",
+    "./components/ui/label.tsx",
+    "./components/ui/select.tsx",
+    "./components/ui/textarea.tsx"
+  ],
+  "utility-functions": [
+    "./lib/utils.ts",
+    "./lib/date-utils.ts",
+    "./lib/fonts.ts"
+  ],
+  "type-definitions": [
+    "./lib/types.ts"
+  ],
+  "database-schema": [
+    "./prisma/schema.prisma"
+  ],
+  "database-migrations": [
+    "./prisma/migrations/20250807161730_init/migration.sql",
+    "./prisma/migrations/20250807174134_add_session/migration.sql",
+    "./prisma/migrations/20250807190813_add_task_entity/migration.sql",
+    "./prisma/migrations/migration_lock.toml"
+  ],
+  "database-utilities": [
+    "./prisma/seed.js",
+    "./prisma/clear.js"
+  ],
+  "unit-tests": [
+    "./tests/unit/button.test.tsx",
+    "./tests/unit/create-task-form.test.tsx",
+    "./tests/unit/date-utils.test.ts",
+    "./tests/unit/input.test.tsx",
+    "./tests/unit/login-actions.test.ts",
+    "./tests/unit/seed-helpers.test.js",
+    "./tests/unit/tasks-actions.test.ts",
+    "./tests/unit/utils-cn.test.ts"
+  ],
+  "e2e-tests": [
+    "./tests/e2e/auth.spec.ts",
+    "./tests/e2e/kanban.spec.ts",
+    "./tests/e2e/tasks.spec.ts"
+  ],
+  "test-utilities": [
+    "./tests/e2e/global-setup.js",
+    "./tests/e2e/global-teardown.js",
+    "./jest.setup.ts"
+  ],
+  "configuration-files": [
+    "./next.config.ts",
+    "./tsconfig.json",
+    "./tsconfig.jest.json",
+    "./eslint.config.mjs",
+    "./jest.config.cjs",
+    "./playwright.config.ts",
+    "./postcss.config.mjs",
+    "./package.json",
+    "./package-lock.json"
+  ],
+  "styling": [
+    "./app/globals.css"
+  ],
+  "static-assets": [
+    "./public/file.svg",
+    "./public/globe.svg",
+    "./public/next.svg",
+    "./public/vercel.svg",
+    "./public/window.svg"
+  ],
+  "development-environment": [
+    "./.devcontainer/devcontainer.json",
+    "./.devcontainer/Dockerfile",
+    "./Dockerfile",
+    "./docker-compose.yml",
+    "./.dockerignore",
+    "./.nvmrc"
+  ],
+  "documentation": [
+    "./README.md",
+    "./rovodevRepoExplanation.md",
+    "./.github/copilot-instructions.md"
+  ],
+  "ci-cd": [
+    "./.github/workflows/jira-callback.yml"
+  ],
+  "temporary-files": [
+    "./tmp_rovodev_code_review.md",
+    "./.rovodevresults/techstack.md"
+  ]
+}
