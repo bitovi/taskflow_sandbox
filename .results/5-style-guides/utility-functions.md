@@ -7,8 +7,11 @@ Simple utility for merging Tailwind classes:
 
 ```typescript
 // lib/utils.ts
-export function cn(...classes: (string | undefined | false | null)[]): string {
-    return classes.filter(Boolean).join(" ");
+import { clsx } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: Parameters<typeof clsx>) {
+    return twMerge(clsx(...inputs))
 }
 ```
 
